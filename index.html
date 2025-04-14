@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="905 Studios - Creative Videography and Photography" />
+  <title>905 Studios</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    #particleCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 100px 20px 50px;
+    }
+
+    #three-container {
+      width: 100%;
+      height: 500px;
+      position: relative;
+      z-index: 2;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+
+  <header>
+    <div class="container">
+      <h1><img src="New-attempt.png" alt="905 Studios Logo" /> 905 Studios</h1>
+      <nav>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h2>Capturing Moments. Creating Stories.</h2>
+      <p>High-quality videography & photography services in the GTA</p>
+      <a href="#contact" class="btn">Get in Touch</a>
+      <div id="three-container"></div>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="container">
+      <h3>Our Services</h3>
+      <ul class="service-list">
+        <li>Event Videography</li>
+        <li>Photography</li>
+        <li>Drone Coverage</li>
+        <li>Editing & Post-Production</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="portfolio" class="section">
+    <div class="container">
+      <h3>Portfolio</h3>
+      <p>Coming soon... Stay tuned for our best work!</p>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="container">
+      <h3>About 905 Studios</h3>
+      <p>We’re passionate about storytelling through visuals. Based in the GTA, we’ve worked with clients across industries, delivering professional and cinematic content.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <h3>Contact Us</h3>
+      <p>Email: <a href="mailto:info@905studios.ca">info@905studios.ca</a></p>
+      <p>Instagram: <a href="https://instagram.com/905studios" target="_blank">@905studios</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 905 Studios. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Particles JS -->
+  <script>
+    const canvas = document.getElementById("particleCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particlesArray = [];
+    const numParticles = 100;
+    const colors = ["#facc15", "#64748b", "#ffffff"];
+
+    class Particle {
+      constructor(x, y, size, speedX, speedY, color) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.color = color;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < numParticles; i++) {
+      let size = Math.random() * 5 + 2;
+      let x = Math.random() * canvas.width;
+      let y = Math.random() * canvas.height;
+      let speedX = (Math.random() - 0.5) * 2;
+      let speedY = (Math.random() - 0.5) * 2;
+      let color = colors[Math.floor(Math.random() * colors.length)];
+      particlesArray.push(new Particle(x, y, size, speedX, speedY, color));
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let particle of particlesArray) {
+        particle.update();
+        particle.draw();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+
+  <!-- 3D CAMERA OBJECT LOADER -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/OBJLoader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/MTLLoader.min.js"></script>
+  <script>
+    const container = document.getElementById("three-container");
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    const light = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(light);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.autoRotate = true;
+
+    camera.position.z = 5;
+
+    const mtlLoader = new THREE.MTLLoader();
+    mtlLoader.load('10124_SLR_Camera_SG_V1_Iteration2.mtl', function(materials) {
+      materials.preload();
+      const objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materials);
+      objLoader.load('10124_SLR_Camera_SG_V1_Iteration2.obj', function(object) {
+        object.scale.set(0.02, 0.02, 0.02);
+        object.rotation.y = Math.PI;
+        scene.add(object);
+      });
+    });
+
+    function animateModel() {
+      requestAnimationFrame(animateModel);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animateModel();
+    window.addEventListener("resize", () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+  </script>
+</body>
+</html>
