@@ -22,13 +22,13 @@ body {
 .popup-content {
   background-color: #1a1a1a;
   color: #f2f2f2;
-  padding: 25px 20px;
+  padding: 30px 25px;
   text-align: center;
-  border-radius: 15px;
-  width: 100%;
-  max-width: 380px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-  animation: popIn 0.4s ease;
+  animation: popIn 0.5s ease;
   position: relative;
 }
 
@@ -40,26 +40,25 @@ body {
 
 .popup-content p {
   font-size: 1rem;
-  line-height: 1.4;
   margin-bottom: 15px;
 }
 
 .popup .btn {
   background-color: #facc15;
   color: #0d0d0d;
-  padding: 12px 20px;
+  padding: 12px 25px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
-  font-size: 1rem;
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 15px;
+  font-size: 1rem;
 }
 
 .popup .close-btn {
   position: absolute;
   top: 15px;
-  right: 18px;
+  right: 20px;
   font-size: 22px;
   color: #ffffff;
   cursor: pointer;
@@ -68,23 +67,4 @@ body {
 @keyframes popIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
-}
-
-@media (max-width: 480px) {
-  .popup-content {
-    padding: 20px 15px;
-  }
-
-  .popup-content h3 {
-    font-size: 1.3rem;
-  }
-
-  .popup-content p {
-    font-size: 0.95rem;
-  }
-
-  .popup .btn {
-    font-size: 0.95rem;
-    padding: 10px 18px;
-  }
 }
